@@ -12,10 +12,10 @@ const transactionsRouter = Router();
 transactionsRouter.get('/', async (request, response) => {
   const transactionRepository = getCustomRepository(TransactionsRepository);
 
-  const transactions = await transactionRepository.find();
+  const newTransactions = await transactionRepository.find();
   const balance = await transactionRepository.getBalance();
 
-  const newTransactions = transactions.map(t => ({
+  const transactions = newTransactions.map(t => ({
     id: t.id,
     type: t.type,
     value: t.value,
@@ -24,7 +24,7 @@ transactionsRouter.get('/', async (request, response) => {
   }));
 
   const data = {
-    newTransactions,
+    transactions,
     balance,
   };
 
