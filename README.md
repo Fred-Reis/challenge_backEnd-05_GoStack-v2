@@ -84,14 +84,17 @@
 
 ## 💡 About Challenge:
 
-In this challenge, construction began on the API that will serve as a front-end server and mobile application in the future.
+In this challenge, new features and improvements were implemented in the [previous project](https://github.com/Fred-Reis/challenge_backEnd-04_GoStack-v2):
 
-Some concepts of SOLID and software architecture were applied.
+- Database integration;
+- TypeOrm to creation and management of tables in the database;
+- Upload csv files;
+- New routes to delete transactions, and create new transactions to CSV files;
+-
 
 ## 📐 Architecture:
 
-In this project, two routes were created divided into a project structure that
-removes all liability from the route file, such as business rules and data validation. A structure with models, repositories and services was used to divide the tasks.
+In this project, the concept of dividing the project structure was improved, which removes all responsibility for route files, such as business rules and data validation. A structure with models, repositories and services was used to divide the tasks. New folders have been created to separate the error class and configs.
 
 Folder's structure:
 
@@ -110,6 +113,9 @@ Folder's structure:
 }
 ```
 
+> When registering a new transaction, it must be stored within the database, having the fields `id`, `title`, `value`, `type`, `category_id`, `created_at`, `updated_at`.
+> Before creating a new category, a check is made to see if a category with the same title already exists. If it exists, the `id` that already exists in the database is used.
+
 - `GET /transactions`: This route should return a list of all the transactions you have registered so far, together with the sum of the entries, withdrawals and total credit. This route must return an object with the following format:
 
 ```js
@@ -119,25 +125,57 @@ Folder's structure:
       "id": "uuid",
       "title": "Salário",
       "value": 4000,
-      "type": "income"
+      "type": "income",
+      "category": {
+        "id": "uuid",
+        "title": "Salary",
+        "created_at": "2020-04-20T00:00:49.620Z",
+        "updated_at": "2020-04-20T00:00:49.620Z",
+      },
+      "created_at": "2020-04-20T00:00:49.620Z",
+      "updated_at": "2020-04-20T00:00:49.620Z",
     },
     {
       "id": "uuid",
       "title": "Freela",
       "value": 2000,
-      "type": "income"
+      "type": "income",
+      "category": {
+        "id": "uuid",
+        "title": "Others",
+        "created_at": "2020-04-20T00:00:49.620Z",
+        "updated_at": "2020-04-20T00:00:49.620Z",
+      },
+      "created_at": "2020-04-20T00:00:49.620Z",
+      "updated_at": "2020-04-20T00:00:49.620Z",
     },
     {
       "id": "uuid",
       "title": "Pagamento da fatura",
       "value": 4000,
-      "type": "outcome"
+      "type": "outcome",
+      "category": {
+        "id": "uuid",
+        "title": "Others",
+        "created_at": "2020-04-20T00:00:49.620Z",
+        "updated_at": "2020-04-20T00:00:49.620Z",
+      },
+      "created_at": "2020-04-20T00:00:49.620Z",
+      "updated_at": "2020-04-20T00:00:49.620Z",
     },
     {
       "id": "uuid",
       "title": "Cadeira Gamer",
       "value": 1200,
-      "type": "outcome"
+      "type": "outcome",
+      "category": {
+        "id": "uuid",
+        "title": "Recreation",
+        "created_at": "2020-04-20T00:00:49.620Z",
+        "updated_at": "2020-04-20T00:00:49.620Z",
+      },
+      "created_at": "2020-04-20T00:00:49.620Z",
+      "updated_at": "2020-04-20T00:00:49.620Z",
     }
   ],
   "balance": {
@@ -148,10 +186,15 @@ Folder's structure:
 }
 ```
 
+- `DELETE /transactions/:id`: This route must delete a transaction with the id present in the `route params`;
+
+- `POST /transactions/import`: The route should allow the import of a file in .csv format that contains the same information needed to create a transaction, `id`, `title`, `value`, `type`, `category_id`, `created_at`, `updated_at`, in which each line of the CSV file must be a new record for the database and finally return all transactions that have been imported into the database;
+
 ## ⚙️ Techs:
 
 - [**NodeJS**](https://nodejs.org/en/);
 - [Docker;](https://www.docker.com/)
+- TypeORM
 - EsLint;
 - Prettier;
 - Express;
