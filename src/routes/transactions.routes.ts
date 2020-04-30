@@ -23,7 +23,14 @@ transactionsRouter.get('/', async (request, response) => {
     type: t.type,
     value: t.value,
     title: t.title,
-    category: [t.category.id, t.category.title],
+    created_at: t.created_at,
+    updated_at: t.updated_at,
+    category: {
+      id: t.category.id,
+      title: t.category.title,
+      created_at: t.category.created_at,
+      updated_at: t.category.updated_at,
+    },
   }));
 
   const data = {
